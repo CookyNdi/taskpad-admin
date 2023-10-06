@@ -26,7 +26,6 @@ export const handleLogin = async (setIsLogin) => {
     },
     allowOutsideClick: () => !Swal.isLoading(),
   });
-  console.log(value);
   if (value !== "Forbiden access!" && value === "Login Successfully") {
     let timerInterval;
     Swal.fire({
