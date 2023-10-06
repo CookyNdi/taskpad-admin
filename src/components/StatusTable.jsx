@@ -9,7 +9,7 @@ const StatusTable = ({ datas, loading, setAction }) => {
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You will not be able to recover this imaginary file!",
+      text: "You will not be able to recover this data!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
@@ -17,7 +17,15 @@ const StatusTable = ({ datas, loading, setAction }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteStatus(id);
-        setAction(true);
+        Swal.fire({
+          icon: "success",
+          title: "Successfully",
+          text: "Status Deleted Successfully",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setAction(true);
+          }
+        });
       }
     });
   };

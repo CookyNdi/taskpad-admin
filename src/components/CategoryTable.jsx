@@ -14,7 +14,15 @@ const CategoryTable = ({ datas, loading, setAction }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteCategory(id);
-        setAction(true);
+        Swal.fire({
+          icon: "success",
+          title: "Successfully",
+          text: "Category Deleted Successfully",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setAction(true);
+          }
+        });
       }
     });
   };
