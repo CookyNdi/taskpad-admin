@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 import { addCategory, addStatus, login } from "./apiHandler";
 
 export const handleLogin = async (setIsLogin) => {
-  const { isConfirmed } = await Swal.fire({
+  const { value } = await Swal.fire({
     title: "Login",
     html: `
       <label for="swal-input1">Username:</label>
@@ -26,11 +26,12 @@ export const handleLogin = async (setIsLogin) => {
     },
     allowOutsideClick: () => !Swal.isLoading(),
   });
-  if (isConfirmed) {
+  console.log(value);
+  if (value !== "Forbiden access!" && value === "Login Successfully") {
     let timerInterval;
     Swal.fire({
-      title: "Please Wait",
-      timer: 3000,
+      title: "Login Successfully, Please Wait",
+      timer: 2000,
       html: "It will redirecting in <b></b> milliseconds.",
       timerProgressBar: true,
       didOpen: () => {
@@ -47,6 +48,12 @@ export const handleLogin = async (setIsLogin) => {
       if (result.dismiss === Swal.DismissReason.timer) {
         setIsLogin(true);
       }
+    });
+  } else if (value === "Forbiden access!" || value === "Incorrect password") {
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: `${value}`,
     });
   }
 };

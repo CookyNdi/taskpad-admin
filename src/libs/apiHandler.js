@@ -15,13 +15,22 @@ export const login = async () => {
     const form = new FormData();
     form.append("username", usernameInput);
     form.append("password", passwordInput);
-    await api.post("/api/login", form, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    if (usernameInput === "CookyNdi" || usernameInput === "vrlomhrn") {
+      const response = await api.post("/api/admin/login", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data.msg;
+    } else {
+      return "Forbiden access!";
+    }
   } catch (error) {
-    console.error("Error:", error);
+    if (error.response && error.response.status === 400) {
+      return error.response.data.msg;
+    } else {
+      console.error("Error:", error);
+    }
   }
 };
 
@@ -29,7 +38,7 @@ export const logout = async () => {
   try {
     await api.delete("/api/logout");
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error:", error.message);
   }
 };
 
